@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<title>Quiz: {{ title }}</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+
+@media (min-width: 820px) {
+  .dynamicwidth {
+    margin: 0 auto;
+    width: 800px;
+  }
+}
+@media (max-width: 819px) {
+  .dynamicwidth {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+#title {
+  font-family: Vollkorn;
+  font-size: 100px;
+  margin-top: 50px;
+}
+#quiz {
+  font-family: Vollkorn;
+  font-size: 16pt;
+}
+#select, #option {
+  font-family: Vollkorn;
+}
+.completeword.green {
+  color: green;
+}
+.completeword.red {
+  color: red;
+}
+#result {
+  display: none;
+  margin-top: 40px;
+  font-family: Vollkorn;
+  font-size: 20pt;
+  text-align: center;
+  font-weight: bold;
+}
+#correct-text-title, #quiz-title {
+  display: none;
+  margin-top: 40px;
+  font-family: Vollkorn;
+  font-size: 18pt;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#correct-text {
+  display:none;
+  font-family: Vollkorn;
+  font-size: 14pt;
+}
+.resultword {
+  color: green;
+}
+#container {
+  margin-bottom: 30px;
+}
+</style>
+<div id = "container">
+<div id = "title" class = "dynamicwidth">{{ title }}</div>
+
+
+<div id = "result" class = "dynamicwidth"></div>
+<div id = "correct-text-title" class = "dynamicwidth">The correct text is:</div>
+<div id = "correct-text" class = "dynamicwidth"></div>
+<div id = "quiz-title" class = "dynamicwidth">Your Answers:</div>
+<div id = "quiz" class = "dynamicwidth">{{ quiztext }}</div>
+</div>
+<script>
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    return array;
+}
+
+function maketag(quiz) {
+  // Convert a quiz definition into markup
+  options = quiz.split("|")
+  html = ""
+  html += "<select onchange = 'quizchanged(this)' class = 'quizselect'>"
+  html += "<option disabled selected>Choose</option>"
+  count = 0
+  option_tags = []
+  $(options).each(function() {
+    option_tags.push("<option value = '" + count.toString() + "|" + this + "'>" + this + "</option>")
+    count ++
+  })
+  $(shuffleArray(option_tags)).each(function() {
+    html += this
+  })
+  html += "</select>"
+  return html
+}
+
+$(document).ready(function() {
+  total_questions = 0
+  number_correct = 0
+  number_incorrect = 0
+
+  original_text = $("#quiz").html().replace(/\n/g, '<br/>');
+  // Split into text fragments and quiz options
+  parts = original_text.split("{")
+  count = 0
+  text_parts = []
+  quiz_parts = []
+  quiz_parts_markup = []
+  // Split the thing into texty and quizzy bits
+  $(parts).each(function(){
+    if (count == 0) {
+      text_parts.push(this)
+    }
+    else {
+      sub_parts = this.split("}")
+      quiz_parts.push(sub_parts[0])
+      total_questions ++
+      text_parts.push(sub_parts[1])
+    }
+    count ++
+  })
+  // Convert each of the quiz parts into html
+  $(quiz_parts).each(function() {
+    quiz_parts_markup.push(maketag(this))
+  })
+  // And reconstruct it
+  new_text = ""
+  new_text += text_parts[0]
+  correct_text = ""
+  correct_text += text_parts[0]
+  count = 0
+  $(quiz_parts_markup).each(function() {
+    new_text += this
+    new_text += text_parts[count + 1]
+    correct_text += "<span class = 'resultword'>" + quiz_parts[count].split("|")[0] + "</span>"
+    correct_text += text_parts[count + 1]
+    count ++
+  })
+  $("#quiz").html(new_text)
+  $("#correct-text").html(correct_text)
+})
+
+function quizchanged(object) {
+  parts = object.value.split("|")
+  if (parts[0] == "0") {
+    colour = "green"
+    number_correct ++
+  }
+  else {
+    colour = "red"
+    number_incorrect ++
+  }
+  $(object).replaceWith("<span class = 'completeword " + colour + "'>" + parts[1] + "</span>")
+  if (number_correct + number_incorrect == total_questions) {
+    percentage = Math.round((number_correct / total_questions) * 100)
+    $("#quiz").fadeOut(function() {
+      $(this).css("font-size", "14pt")
+    })
+    $("#result").html("You scored " + percentage.toString() + "%!")
+    $("#result").delay(400).fadeIn()
+    $("#correct-text-title").delay(1000).fadeIn()
+    $("#correct-text, #quiz-title, #quiz").delay(1600).fadeIn()
+  }
+}
+
+</script>

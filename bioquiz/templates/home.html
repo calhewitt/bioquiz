@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<title>Biology Quizzes</title>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+
+#title {
+  margin: 0 auto;
+  width: 800px;
+  font-family: Vollkorn;
+  font-size: 80px;
+  margin-top: 50px;
+}
+
+#container {
+  margin: 0 auto;
+  width: 800px;
+  font-family: Vollkorn;
+  font-size: 18pt;
+}
+</style>
+<div id = "title">Biology Quizzes</div>
+<div id = "container">
+<ul>
+{% for quiz in quizlist %}
+    <li><a href = "showquiz?id={{ quiz.0 }}">{{ quiz.1 }}</a></li>
+{% endfor %}
+</ul>
+</div>
