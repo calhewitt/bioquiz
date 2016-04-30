@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<title>Admin Panel</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+
+a {
+  color: black;
+}
+
+#title {
+  margin: 0 auto;
+  width: 800px;
+  font-family: Vollkorn;
+  font-size: 80px;
+  margin-top: 50px;
+}
+
+#container {
+  margin: 0 auto;
+  width: 800px;
+  font-family: Vollkorn;
+  font-size: 18pt;
+}
+
+#title span {
+  font-size:16pt;
+  color: black;
+  text-decoration: none;
+}
+</style>
+<div id = "title">Admin Panel <span>(<a href = "../">Back to home</a> // <a href = "logout">Log Out</a>)</span></div>
+<div id = "container">
+<div style = "text-align: center">
+<a href = "new">New Quiz</a>
+</div>
+<ul>
+{% for quiz in quizlist %}
+    <li>{{ quiz.1 }} - <a href = "edit?id={{quiz.0}}">edit</a> // <a class="confirm" href = "delete?id={{quiz.0}}">delete</a></li>
+{% endfor %}
+</ul>
+</div>
+
+<script>
+$(function() {
+    $('.confirm').click(function() {
+        return window.confirm("Are you sure?");
+    });
+});
+</script>

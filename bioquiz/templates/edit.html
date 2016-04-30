@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<title>Editing: {{ title }}</title>
+
+<style>
+@import url(https://fonts.googleapis.com/css?family=Vollkorn);
+
+@media (min-width: 820px) {
+  .dynamicwidth {
+    margin: 0 auto;
+    width: 800px;
+  }
+}
+@media (max-width: 819px) {
+  .dynamicwidth {
+    margin: 0;
+    width: 100%;
+  }
+}
+
+#title {
+  font-family: Vollkorn;
+  font-size: 50px;
+  margin-top: 50px;
+}
+#title a {
+  font-size:16pt;
+  color: black;
+  text-decoration: none;
+}
+#title a:hover {
+  text-decoration: underline;
+}
+#quiz {
+  font-family: Vollkorn;
+  font-size: 16pt;
+}
+#quiz textarea {
+  width: 800px;
+  height: 500px;
+}
+#select, #option {
+  font-family: Vollkorn;
+}
+.completeword.green {
+  color: green;
+}
+.completeword.red {
+  color: red;
+}
+#result {
+  display: none;
+  margin-top: 40px;
+  font-family: Vollkorn;
+  font-size: 20pt;
+  text-align: center;
+  font-weight: bold;
+}
+#correct-text-title, #quiz-title {
+  display: none;
+  margin-top: 40px;
+  font-family: Vollkorn;
+  font-size: 18pt;
+  text-align: center;
+  margin-bottom: 20px;
+}
+#correct-text {
+  display:none;
+  font-family: Vollkorn;
+  font-size: 14pt;
+}
+.resultword {
+  color: green;
+}
+#container {
+  margin-bottom: 30px;
+}
+</style>
+<div id = "container">
+<div id = "title" class = "dynamicwidth">Editing: {{ title }}</div>
+<div id = "quiz" class = "dynamicwidth">
+<form action = "edit" method = "POST">
+<input type = "hidden" name = "id" value = "{{id}}">
+<input type = "hidden" name = "formdone" value = "TRUE">
+<textarea name = "quiztext">{{ quiztext }}</textarea>
+<input type = "submit" value = "Save">
+<button onclick = "window.location = './'">Cancel</button>
+</form>
+</div>
+
+</div>

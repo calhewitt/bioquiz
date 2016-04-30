@@ -24,6 +24,14 @@
   font-size: 100px;
   margin-top: 50px;
 }
+#title a {
+  font-size:16pt;
+  color: black;
+  text-decoration: none;
+}
+#title a:hover {
+  text-decoration: underline;
+}
 #quiz {
   font-family: Vollkorn;
   font-size: 16pt;
@@ -66,7 +74,7 @@
 }
 </style>
 <div id = "container">
-<div id = "title" class = "dynamicwidth">{{ title }}</div>
+<div id = "title" class = "dynamicwidth">{{ title }} <a href = "../">(Back to quizzes homepage)</a></div>
 
 
 <div id = "result" class = "dynamicwidth"></div>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-
-<title>Biology Quizzes</title>
-
+<title>Authentication</title>
 <style>
 @import url(https://fonts.googleapis.com/css?family=Vollkorn);
 
@@ -11,6 +9,7 @@
   font-family: Vollkorn;
   font-size: 80px;
   margin-top: 50px;
+  text-align: center;
 }
 
 #container {
@@ -28,14 +27,23 @@
 a {
   color: black;
 }
+form {
+  font-family: Vollkorn;
+  text-align: center;
+}
+input[type=password] {
+  width: 400px;
+  height: 30px;
+  font-size: 20px;
+  padding: 5px;
+}
 </style>
-<div id = "title">Biology Quizzes</div>
 <div id = "container">
-<ul>
-{% for quiz in quizlist %}
-    <li><a href = "showquiz?id={{ quiz.0 }}">{{ quiz.1 }}</a></li>
-{% endfor %}
-</ul>
-<div id = "adminlink">
-<a href = "admin">Admin</a>
-</div></div>
+<div id = "title">
+Password:
+</div>
+</title>
+<form action = "" method = "POST">
+  <input autofocus type = "password" name = "password"><br>
+</form>
+</div>
