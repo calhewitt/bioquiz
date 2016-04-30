@@ -22,7 +22,7 @@ def home(request):
     cursor.execute("SELECT rowid, title FROM quizzes")
     quizzes = cursor.fetchall()
     t = template.Template(open(settings.BASE_DIR + "/bioquiz/templates/home.html").read())
-    context = template.Context({"quizlist": quizzes})
+    context = template.Context({"quizlist": quizzes, "home": request.path})
     return HttpResponse(t.render(context))
 
 def authenticate(request):

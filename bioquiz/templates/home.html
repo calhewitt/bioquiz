@@ -33,7 +33,7 @@ a {
 <div id = "container">
 <ul>
 {% for quiz in quizlist %}
-    <li><a href = "showquiz?id={{ quiz.0 }}">{{ quiz.1 }}</a></li>
+    <li><a href = "{{home}}showquiz?id={{ quiz.0 }}">{{ quiz.1 }}</a></li>
 {% endfor %}
 </ul>
 <div id = "adminlink">

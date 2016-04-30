@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^admin/delete$', delete_quiz),
     url(r'^admin/new$', new),
     url(r'^admin/logout$', logout),
-    url(r'^/$', home),
     url(r'^$', home),
     url(r'^showquiz/$', showquiz)
 ]
